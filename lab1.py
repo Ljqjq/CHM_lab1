@@ -13,16 +13,24 @@ def dichotomi_method(a, b, E):
         print("Невірний вибір відрізка [a, b]")
         return None
     
+    it = 0
+
     while (b - a) / 2 > E:
         c = (a + b) / 2
+
+        it = it + 1
 
         if f(c) == 0:
             print(f"Точний корінь знайдено: {c}")
             return c
         elif f(a) * f(c) < 0:
             b = c
+            print(f"Міняєм верхню межу на середину {c}")
         else:
             a = c
+            print(f"Міняєм нижню межу на середину {c}")
+    
+    print(f"кількість ітерацій: {it}")
 
     return (a + b) / 2
 
@@ -32,41 +40,46 @@ def horda_method(a, b, E):
         return a
     if f(b) == 0:
         print(f"Точний корінь знайдено: {b}")
-        return b
+        return b   
+    if f(a) * f(b) >= 0:
+        print("Невірний вибір відрізка [a, b]")
+        return None
     
     x1 = a - (f(a) * (b - a)) / (f(b) - f(a))
     x2 = x1 - (f(x1) * (b - x1)) / (f(b) - f(x1))
 
+    it = 0
+
     while abs(x2 - x1) > E:
+        it = it + 1
+
         x1 = x2
         x2 = x1 - (f(x1) * (b - x1)) / (f(b) - f(x1))
 
+        print (f"координата x рухомої вершини: {x2}")
+        
         if f(x2) == 0:
             print(f"Точний корінь знайдено: {x2}")
             return x2
         
-    if (x2 > b or x2 < a):
-        print("Невірний вибір відрізка [a, b]")
-        return None
-    
+    print(f"Кількість ітерацій: {it}")
+
     return x2
 
-# Приблизно визначимо інтервали для коренів графічно або аналітично з додачою пробних неправильних інтервалів де не існує кореня
-intervals = [(-2, 0), (0, 1), (1, 2)]
-
+# Приблизно визначимо інтервали для коренів графічно або аналітично і вводимо через консоль
+a = int(input("\n\n\n\nВведіть нижню межу:"))
+b = int(input("\nВведіть верхню межу:"))
 #вводим похибку
-E = 0.0001
+E = float(input("\nВведіть похибку:"))
 
 print("\n\n\nМетод дихотомії:")
-for a, b in intervals:
-    root = dichotomi_method(a, b, E)
+root = dichotomi_method(a, b, E)
 
-    if root is not None:
-        print(f"Корінь на [{a}, {b}]: {root:.6f}")
+if root is not None:
+    print(f"Корінь на [{a}, {b}]: {root:.6f}")
 
 print("\nМетод хорд:")
-for a, b in intervals:
-    root = horda_method(a, b, E)
+root = horda_method(a, b, E)
 
-    if root is not None:
-        print(f"Корінь на [{a}, {b}]: {root:.6f}")
+if root is not None:
+    print(f"Корінь на [{a}, {b}]: {root:.6f}")
