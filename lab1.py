@@ -2,6 +2,9 @@
 def f(x):
     return x**3 - 0.4*x**2 + 3.2*x - 1.5
 
+def f_der(x):
+    return 6*x - 0,8
+
 def dichotomi_method(a, b, E):
     if f(a) == 0:
         print(f"Точний корінь знайдено: {a}")
@@ -31,6 +34,7 @@ def dichotomi_method(a, b, E):
             print(f"Міняєм нижню межу на середину {c}")
     
     print(f"кількість ітерацій: {it}")
+    print(f"Значення функції в точці {(a + b)/2} = {f((a + b) / 2)}")
 
     return (a + b) / 2
 
@@ -45,6 +49,8 @@ def horda_method(a, b, E):
         print("Невірний вибір відрізка [a, b]")
         return None
     
+    #if f(a) == f_der(a): TODO
+        
     x1 = a - (f(a) * (b - a)) / (f(b) - f(a))
     x2 = x1 - (f(x1) * (b - x1)) / (f(b) - f(x1))
 
@@ -56,18 +62,18 @@ def horda_method(a, b, E):
         x1 = x2
         x2 = x1 - (f(x1) * (b - x1)) / (f(b) - f(x1))
 
-        print (f"координата x рухомої вершини: {x2}")
+        print (f"координата x рухомого кінця: {x2}")
         
         if f(x2) == 0:
             print(f"Точний корінь знайдено: {x2}")
             return x2
         
     print(f"Кількість ітерацій: {it}")
-
+    print(f"Значення функції в точці {x2} = {f(x2)}")
     return x2
 
 # Приблизно визначимо інтервали для коренів графічно або аналітично і вводимо через консоль
-a = int(input("\n\n\n\nВведіть нижню межу:"))
+a = int(input("\nВведіть нижню межу:"))
 b = int(input("\nВведіть верхню межу:"))
 #вводим похибку
 E = float(input("\nВведіть похибку:"))
