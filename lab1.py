@@ -49,9 +49,10 @@ def horda_method(a, b, E):
         print("Невірний вибір відрізка [a, b]")
         return None
     
-    #if f(a) == f_der(a): TODO
-        
+    
     x1 = a - (f(a) * (b - a)) / (f(b) - f(a))
+    if f(a) == f_der(a): 
+        x1 = b - (f(b) * (b - a)) / (f(b) - f(a))
     x2 = x1 - (f(x1) * (b - x1)) / (f(b) - f(x1))
 
     it = 0
